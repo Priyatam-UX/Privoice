@@ -76,7 +76,7 @@ function LiveConsole({ live, setLive, openNew }: { live: Live[]; setLive: React.
           <div className="grid gap-0 md:grid-cols-[1fr_220px]">
             <div className="max-h-[360px] min-h-[260px] overflow-y-auto p-5"><p className="mb-3 text-xs font-medium uppercase tracking-wide text-ink-4">Live transcript</p><Transcript lines={shown} />{shown.length < full.length && <p className="mt-3 flex items-center gap-2 text-xs text-ink-3"><span className="flex gap-0.5">{[0, 1, 2].map(i => <span key={i} style={{ animationDelay: `${i * 150}ms` }} className="h-1 w-1 animate-bounce rounded-full bg-slate-400" />)}</span>listening…</p>}</div>
             <div className="space-y-4 border-t border-line p-5 md:border-l md:border-t-0">
-              <div><p className="text-xs font-medium text-ink-4">AI status</p><p className="mt-1 flex items-center gap-1.5 text-sm font-medium"><Sparkles size={14} className="text-violet-500" />{shown.length % 2 ? 'Speaking' : 'Listening'}</p></div>
+              <div><p className="text-xs font-medium text-ink-4">AI status</p><p className="mt-1 flex items-center gap-1.5 text-sm font-medium"><Sparkles size={14} className="text-brand-500" />{shown.length % 2 ? 'Speaking' : 'Listening'}</p></div>
               <div><p className="text-xs font-medium text-ink-4">Predicted outcome</p><Badge tone="ok" className="mt-1">Interested · 82%</Badge></div>
               <div><p className="text-xs font-medium text-ink-4">Sentiment</p><Progress value={78} tone="ok" /></div>
               <div><p className="text-xs font-medium text-ink-4">Knowledge used</p><p className="mt-1 text-xs text-ink-2">Pricing, Integrations (nimbuscloud.io)</p></div>

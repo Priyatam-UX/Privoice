@@ -20,7 +20,7 @@ export function IconButton({ label, children, className, ...p }: ButtonHTMLAttri
 }
 
 /* Badge */
-const TONES = { slate: 'bg-slate-100 text-slate-700', brand: 'bg-brand-50 text-brand-700', violet: 'bg-violet2-50 text-violet-700', ok: 'bg-ok-50 text-ok-700', warn: 'bg-warn-50 text-warn-700', bad: 'bg-bad-50 text-bad-700' }
+const TONES = { slate: 'bg-slate-100 text-slate-700', brand: 'bg-brand-50 text-brand-700', violet: 'bg-violet2-50 text-brand-700', ok: 'bg-ok-50 text-ok-700', warn: 'bg-warn-50 text-warn-700', bad: 'bg-bad-50 text-bad-700' }
 export type Tone = keyof typeof TONES
 export const Badge = ({ tone = 'slate', children, dot, className }: { tone?: Tone; children: ReactNode; dot?: boolean; className?: string }) => (
   <span className={cn('inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap', TONES[tone], className)}>
@@ -40,7 +40,7 @@ export const PageHeader = ({ title, sub, actions }: { title: string; sub?: strin
 )
 
 /* Avatar */
-const AV = ['bg-indigo-100 text-indigo-700', 'bg-violet-100 text-violet-700', 'bg-sky-100 text-sky-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700']
+const AV = ['bg-indigo-100 text-indigo-700', 'bg-brand-100 text-brand-700', 'bg-sky-100 text-sky-700', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700', 'bg-rose-100 text-rose-700']
 export const Avatar = ({ name, size = 32 }: { name: string; size?: number }) => (
   <span style={{ width: size, height: size, fontSize: size * 0.38 }} className={cn('inline-flex shrink-0 items-center justify-center rounded-full font-semibold', AV[name.charCodeAt(0) % AV.length])}>{initials(name)}</span>
 )

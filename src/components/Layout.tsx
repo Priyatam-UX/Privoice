@@ -36,10 +36,10 @@ function SidebarBody({ onNav }: { onNav?: () => void }) {
       <nav className="flex-1 space-y-0.5 px-3" aria-label="Main">
         {NAV.map(n => (
           <NavLink key={n.to} to={n.to} onClick={onNav}
-            className={({ isActive }) => cn('group flex items-center gap-3 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-all', isActive ? 'bg-white/10 text-white shadow-[inset_2px_0_0_#818cf8]' : 'hover:bg-white/5 hover:text-white')}>
+            className={({ isActive }) => cn('group flex items-center gap-3 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-all', isActive ? 'bg-white/10 text-white shadow-[inset_2px_0_0_#4fcf66]' : 'hover:bg-white/5 hover:text-white')}>
             <n.icon size={17} className="opacity-80" />{n.label}
             {n.to === '/voice' && <span className="ml-auto flex items-center gap-1 rounded-full bg-emerald-500/15 px-1.5 text-[10px] font-semibold text-emerald-400"><span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />LIVE</span>}
-            {n.to === '/internships' && <span className="ml-auto rounded-full bg-violet2-500/20 px-1.5 text-[10px] font-semibold text-violet-300">NEW</span>}
+            {n.to === '/internships' && <span className="ml-auto rounded-full bg-violet2-500/20 px-1.5 text-[10px] font-semibold text-brand-300">NEW</span>}
           </NavLink>))}
       </nav>
       <div className="m-3 rounded-xl border border-white/10 bg-white/5 p-3">

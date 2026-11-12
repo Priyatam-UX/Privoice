@@ -18,7 +18,7 @@ export default function Login() {
         <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-600/30 blur-3xl" /><div className="absolute -bottom-32 left-10 h-96 w-96 rounded-full bg-violet2-500/20 blur-3xl" />
         <div className="relative"><Logo light /></div>
         <div className="relative max-w-md">
-          <h1 className="text-[34px] font-semibold leading-tight tracking-tight">Less manual work.<br />Faster pipelines.<br /><span className="text-violet-300">Smarter communication.</span></h1>
+          <h1 className="text-[34px] font-semibold leading-tight tracking-tight">Less manual work.<br />Faster pipelines.<br /><span className="text-brand-300">Smarter communication.</span></h1>
           <p className="mt-4 text-slate-300">The AI-powered revenue and support platform for tech companies, with built-in intern hiring.</p>
           <ul className="mt-8 space-y-3 text-sm text-slate-200">
             {[[PhoneCall, 'AI voice campaigns with transcripts & outcomes'], [Globe, 'Answers grounded in your verified website content'], [Briefcase, 'Intern hiring portal with full lifecycle tracking'], [ShieldCheck, 'Role-based access, workspace isolation, audit logs']].map(([I, t], i) => { const Ic = I as typeof PhoneCall; return <li key={i} className="flex items-center gap-3"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10"><Ic size={16} /></span>{t as string}</li> })}

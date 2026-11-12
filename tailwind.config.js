@@ -5,12 +5,12 @@ export default {
     extend: {
       fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
       colors: {
-        navy: { 950: '#070b1f', 900: '#0b1030', 800: '#111a44', 700: '#1a2560' },
+        navy: { 950: '#0c1013', 900: '#13191d', 800: '#1a2227', 700: '#242e34' },
         ink: { DEFAULT: '#0f172a', 2: '#334155', 3: '#64748b', 4: '#94a3b8' },
         line: { DEFAULT: '#e6e8f0', 2: '#eef0f6' },
-        canvas: '#f6f7fb',
-        brand: { 50: '#eef0ff', 100: '#e0e4ff', 200: '#c7ceff', 500: '#5b5bf0', 600: '#4f46e5', 700: '#4338ca' },
-        violet2: { 50: '#f5f1ff', 100: '#ece5ff', 500: '#8b5cf6' },
+        canvas: '#f5f7f6',
+        brand: { 50: '#edfbf0', 100: '#d6f5dd', 200: '#afeabd', 300: '#86df98', 400: '#68d97c', 500: '#4fcf66', 600: '#2fa84a', 700: '#23853a' },
+        violet2: { 50: '#ecfdf8', 100: '#d1faec', 500: '#2dd4a7' },
         ok: { 50: '#ecfdf5', 500: '#10b981', 600: '#059669', 700: '#047857' },
         warn: { 50: '#fffbeb', 500: '#f59e0b', 600: '#d97706', 700: '#b45309' },
         bad: { 50: '#fef2f2', 500: '#dc6262', 600: '#c24545', 700: '#a13636' },

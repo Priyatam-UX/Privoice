@@ -1,6 +1,6 @@
 import type { InstData } from './types'
 import { LEAD_STAGES } from './types'
-export const CHART = { brand: '#4f46e5', violet: '#8b5cf6', sky: '#38bdf8', ok: '#10b981', warn: '#f59e0b', bad: '#dc6262', grid: '#eef0f6', axis: '#94a3b8' }
+export const CHART = { brand: '#2fa84a', violet: '#14b8a6', sky: '#38bdf8', ok: '#10b981', warn: '#f59e0b', bad: '#dc6262', grid: '#eef0f6', axis: '#94a3b8' }
 export const PALETTE = [CHART.brand, CHART.violet, CHART.sky, CHART.ok, CHART.warn, '#64748b']
 const day = (n: number) => { const d = new Date(); d.setDate(d.getDate() - n); return d }
 const label = (d: Date) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
