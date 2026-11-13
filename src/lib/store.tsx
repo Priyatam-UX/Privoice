@@ -15,7 +15,7 @@ interface Ctx {
 }
 const C = createContext<Ctx>(null as never)
 export const useApp = () => useContext(C)
-const KEY = 'privoice.v1'
+const KEY = 'privoice.v2'
 
 function load(): { session: Session | null; instId: string; store: Record<string, InstData> } {
   try { const raw = localStorage.getItem(KEY); if (raw) return JSON.parse(raw) } catch { /* ignore */ }

@@ -91,7 +91,7 @@ export function buildInstitution(idx: number): InstData {
   const knowledge: Knowledge[] = [
     { id: 'W-1', label: 'Company website', url: 'https://www.nimbuscloud.io', kind: 'Website', status: 'synced', lastSync: iso(-3), pages: 142, items: { Products: 12, 'Pricing pages': 6, Features: 84, Integrations: 40 } },
     { id: 'W-2', label: 'Developer docs', url: 'https://docs.nimbuscloud.io', kind: 'Website', status: 'syncing', lastSync: iso(-26), pages: 356, items: { 'API endpoints': 120, Guides: 64, SDKs: 3 } },
-    { id: 'W-3', label: 'Security whitepaper (PDF)', url: 'https://nimbuscloud.io/docs/security-whitepaper.pdf', kind: 'PDF', status: 'error', lastSync: iso(-80), pages: 0, items: {}, error: 'HTTP 403 — crawler blocked by robots.txt. Allow "PrivoiceBot" or upload the PDF manually.' },
+    { id: 'W-3', label: 'Security whitepaper (PDF)', url: 'https://nimbuscloud.io/docs/security-whitepaper.pdf', kind: 'PDF', status: 'synced', lastSync: iso(-14), pages: 36, items: { 'Security controls': 42, Certifications: 4 } },
     { id: 'W-4', label: 'Help center FAQ', url: 'https://help.nimbuscloud.io', kind: 'FAQ', status: 'synced', lastSync: iso(-9), pages: 48, items: { FAQs: 164, Troubleshooting: 41 } },
   ]
   const integrations: Integration[] = [
@@ -113,7 +113,7 @@ export function buildInstitution(idx: number): InstData {
       { id: 'au3', at: iso(-26), user: 'Anitha', role: 'hiring_coordinator', action: 'Scheduled interview', target: internApps[2].student },
     ],
     notifications: [
-      { id: 'nt1', at: iso(-0.2), title: 'Knowledge source failed', body: 'Security whitepaper (PDF) could not be crawled.', read: false, kind: 'warn' },
+      { id: 'nt1', at: iso(-0.2), title: 'Knowledge source synced', body: 'Security whitepaper (PDF) synced successfully.', read: false, kind: 'success' },
       { id: 'nt2', at: iso(-1), title: 'Campaign milestone', body: 'Q3 Inbound Demo Requests reached 800 conversations.', read: false, kind: 'success' },
       { id: 'nt3', at: iso(-4), title: '12 follow-ups due today', body: 'Review pending follow-ups in Pipeline.', read: false, kind: 'info' },
     ],
