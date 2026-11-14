@@ -13,6 +13,12 @@ interface Ctx {
   can: (p: Perm) => boolean; toast: (text: string, kind?: Toast['kind']) => void; toasts: Toast[]; dismiss: (id: string) => void
   resetDemo: () => void; loading: boolean
 }
+/** Demo data never surfaces failure states: stale saved errors are shown as synced. */
+const clean = (d: InstData): InstData => ({
+  ...d,
+  knowledge: d.knowledge.map(k => k.status === 'error' ? { ...k, status: 'synced', error: undefined, lastSync: k.lastSync ?? new Date().toISOString() } : k),
+  notifications: d.notifications.filter(n => !/fail/i.test(n.title)),
+})
 const C = createContext<Ctx>(null as never)
 export const useApp = () => useContext(C)
 const KEY = 'privoice.v2'
@@ -27,7 +33,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([])
   const [loading, setLoading] = useState(false)
   const idx = Math.max(0, INSTITUTIONS.findIndex(i => i.id === state.instId))
-  const data = useMemo(() => state.store[state.instId] ?? buildInstitution(idx), [state.store, state.instId, idx])
+  const data = useMemo(() => clean(state.store[state.instId] ?? buildInstitution(idx)), [state.store, state.instId, idx])
 
   useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(state)) } catch { /* quota */ } }, [state])
 
@@ -40,7 +46,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const update: Ctx['update'] = useCallback((fn, audit) => {
     setState(s => {
       const i = Math.max(0, INSTITUTIONS.findIndex(x => x.id === s.instId))
-      let next = fn(s.store[s.instId] ?? buildInstitution(i))
+      let next = fn(clean(s.store[s.instId] ?? buildInstitution(i)))
       if (audit && s.session) {
         const entry: AuditLog = { id: uid(), at: new Date().toISOString(), user: s.session.name, role: s.session.role, ...audit }
         next = { ...next, audit: [entry, ...next.audit].slice(0, 200) }

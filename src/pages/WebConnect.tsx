@@ -58,9 +58,7 @@ export default function WebConnect() {
   const sync = (k: Knowledge) => {
     set(k.id, { status: 'syncing', error: undefined }); update(d => d, { action: 'Started sync (simulated)', target: k.label }); toast(`Syncing ${k.label}…`, 'info')
     timers.current.push(window.setTimeout(() => {
-      const fail = k.kind === 'PDF' && k.error
-      if (fail) { set(k.id, { status: 'error', error: k.error }); toast(`${k.label} failed to sync`, 'error') }
-      else { set(k.id, { status: 'synced', lastSync: new Date().toISOString(), pages: k.pages || 12, items: Object.keys(k.items).length ? k.items : { Products: 12, 'Pricing pages': 6 } }); toast(`${k.label} synced`) }
+      set(k.id, { status: 'synced', lastSync: new Date().toISOString(), pages: k.pages || 12, items: Object.keys(k.items).length ? k.items : { Products: 12, 'Pricing pages': 6 } }); toast(`${k.label} synced`)
     }, 2400))
   }
   const addSource = () => {
@@ -70,18 +68,16 @@ export default function WebConnect() {
   }
   const cols: Col<Knowledge>[] = [
     { key: 'l', header: 'Source', sort: r => r.label, render: r => <span className="flex items-center gap-2.5"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-ink-3">{r.kind === 'Website' ? <Globe size={15} /> : <FileText size={15} />}</span><span className="min-w-0"><span className="block font-medium">{r.label}</span><span className="block max-w-[240px] truncate text-xs text-ink-3">{r.url}</span></span></span> },
-    { key: 's', header: 'Status', sort: r => r.status, render: r => r.status === 'synced' ? <Badge tone="ok" dot>Synced</Badge> : r.status === 'syncing' ? <Badge tone="brand"><Loader2 size={11} className="animate-spin" />Syncing</Badge> : r.status === 'error' ? <Badge tone="bad" dot>Error</Badge> : <Badge>Queued</Badge> },
+    { key: 's', header: 'Status', sort: r => r.status, render: r => r.status === 'synced' ? <Badge tone="ok" dot>Synced</Badge> : r.status === 'syncing' ? <Badge tone="brand"><Loader2 size={11} className="animate-spin" />Syncing</Badge> : <Badge>Queued</Badge> },
     { key: 'p', header: 'Pages', sort: r => r.pages, render: r => <span className="tabular-nums">{r.pages || '—'}</span> },
     { key: 'i', header: 'Imported', render: r => <span className="text-xs text-ink-3">{Object.entries(r.items).map(([k, v]) => `${v} ${k.toLowerCase()}`).slice(0, 2).join(' · ') || '—'}</span> },
     { key: 't', header: 'Last updated', sort: r => r.lastSync ?? '', render: r => <span className="text-xs text-ink-3">{r.lastSync ? ago(r.lastSync) : 'Never'}</span> },
     { key: 'a', header: '', render: r => can('webconnect') ? <span className="flex justify-end gap-1"><Button size="sm" disabled={r.status === 'syncing'} icon={<RefreshCw size={13} className={r.status === 'syncing' ? 'animate-spin' : ''} />} onClick={e => { e.stopPropagation(); sync(r) }}>Sync</Button><Button size="sm" variant="ghost" aria-label="Remove source" icon={<Trash2 size={13} />} onClick={e => { e.stopPropagation(); setDel(r) }} /></span> : null },
   ]
-  const errs = data.knowledge.filter(k => k.status === 'error')
   return (
     <div className="space-y-5">
       <PageHeader title="WebConnect" sub="Connect your official website so the AI assistant answers with verified product information." actions={<><DemoBadge text="Simulated crawler" />{can('webconnect') && <Button variant="primary" icon={<Plus size={15} />} onClick={() => setAdd(true)}>Connect source</Button>}</>} />
-      {errs.map(e => <div key={e.id} role="alert" className="flex flex-wrap items-start gap-3 rounded-xl border border-bad-500/30 bg-bad-50 p-4 text-sm"><AlertTriangle size={18} className="mt-0.5 shrink-0 text-bad-600" /><div className="min-w-0 flex-1"><p className="font-medium text-bad-700">{e.label} failed to sync</p><p className="text-bad-700/80">{e.error}</p></div>{can('webconnect') && <Button size="sm" onClick={() => sync(e)}>Retry</Button>}</div>)}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">{[['Sources', data.knowledge.length, <Link2 size={15} />], ['Healthy', data.knowledge.filter(k => k.status === 'synced').length, <CheckCircle2 size={15} className="text-ok-600" />], ['Pages indexed', data.knowledge.reduce((s, k) => s + k.pages, 0), <FileText size={15} />], ['Needs attention', errs.length, <AlertTriangle size={15} className="text-bad-600" />]].map(([k, v, i], idx) => <Card key={idx} className="flex items-center justify-between px-4 py-3"><div><p className="text-xs text-ink-3">{k as string}</p><p className="text-xl font-semibold tabular-nums">{v as number}</p></div>{i as React.ReactNode}</Card>)}</div>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">{[['Sources', data.knowledge.length, <Link2 size={15} />], ['Healthy', data.knowledge.filter(k => k.status === 'synced').length, <CheckCircle2 size={15} className="text-ok-600" />], ['Pages indexed', data.knowledge.reduce((s, k) => s + k.pages, 0), <FileText size={15} />], ['Items imported', data.knowledge.reduce((s, k) => s + Object.values(k.items).reduce((a, b) => a + b, 0), 0), <BookOpen size={15} />]].map(([k, v, i], idx) => <Card key={idx} className="flex items-center justify-between px-4 py-3"><div><p className="text-xs text-ink-3">{k as string}</p><p className="text-xl font-semibold tabular-nums">{v as number}</p></div>{i as React.ReactNode}</Card>)}</div>
       <Tabs value={tab} onChange={setTab} items={[{ id: 'sources', label: 'Knowledge sources' }, { id: 'data', label: 'Imported data' }, { id: 'config', label: 'Crawl settings' }, { id: 'preview', label: 'Chatbot & AI preview' }]} />
       {tab === 'sources' && <Card><DataTable rows={data.knowledge} cols={cols} empty={<Empty title="No sources connected" body="Add your company website to get started." icon={<Globe size={20} />} action={<Button variant="primary" onClick={() => setAdd(true)}>Connect website</Button>} />} /></Card>}
       {tab === 'data' && <Card><div className="px-5 pt-3"><Tabs value={dtab} onChange={setDtab} items={(['Plans', 'Pricing', 'Features', 'Availability'] as const).map(id => ({ id, label: id }))} /></div>
